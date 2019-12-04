@@ -18,19 +18,37 @@ What is the sum of the fuel requirements for all of the modules on your spacecra
 
 
 async function main(){
-
+    // verify the stuff we where given
+    runTests(12,2);
+    runTests(14, 2);
+    runTests(1969, 654);
+    runTests(100756, 33583);
+    // run through the input
     let entries = (await utility.readInput('./dec_1_1/input.txt')).map((val)=>{
-        let num = +val;
-        // divide by 3
-        num = num / 3.0;
-        num = Math.floor(num); // round down
-        num = num -2; // subtract 2
-        return +val;
+        let fueldRequired = fuelRequiredToLaunchModule(+val);
+        return fueldRequired;
     });
     let sum = entries.reduce((prev,current)=>{
         return prev + current;
     },0);
     console.log(`Answer is ${sum}`);
+}
+
+function runTests(mass: number, expectedFuelRequired: number){
+    let actualFuelRequired = fuelRequiredToLaunchModule(mass);
+
+    if( actualFuelRequired != expectedFuelRequired){
+        throw new Error(`Test Failed.  Input Mass: [${mass}] Expected: [${expectedFuelRequired}] Got: [${actualFuelRequired}]`);
+    }
+}
+
+function fuelRequiredToLaunchModule(moduleMass: number): number{
+    let num = moduleMass;
+    // divide by 3
+    num = num / 3.0;
+    num = Math.floor(num); // round down
+    num = num -2; // subtract 2
+    return num;
 }
 
 
