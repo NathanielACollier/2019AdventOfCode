@@ -20,6 +20,11 @@ What is the sum of the fuel requirements for all of the modules on your spacecra
 async function main(){
 
     let entries = (await utility.readInput('./dec_1_1/input.txt')).map((val)=>{
+        let num = +val;
+        // divide by 3
+        num = num / 3.0;
+        num = Math.floor(num); // round down
+        num = num -2; // subtract 2
         return +val;
     });
     let sum = entries.reduce((prev,current)=>{
